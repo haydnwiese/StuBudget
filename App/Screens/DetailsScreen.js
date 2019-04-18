@@ -30,6 +30,12 @@ export default class DetailsScreen extends React.Component {
     }
 
     termDetailsCard() {
+        const monthNames = 
+            [
+                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+
         return(
             <View style={styles.card}>
                 <View style={styles.cardView}>
@@ -41,32 +47,67 @@ export default class DetailsScreen extends React.Component {
                     <Text style={[styles.termData, styles.contentText]}>{this.props.weeklyHours} hours</Text>
                 </View>
                 <View style={styles.cardView}>
-                    <Text style={[styles.termDetails, {marginBottom: 5}, styles.contentText]}>Hourly Pay:</Text>
+                    <Text style={[styles.termDetails, styles.contentText]}>Hourly Pay:</Text>
                     <Text style={[styles.termData, styles.contentText]}>${this.props.hourlyPay}</Text>
                 </View>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText} onPress={() => this.props.navigation.navigate('EditDetails')}>EDIT DETAILS</Text>
+                <View style={styles.cardView}>
+                    <Text style={[styles.termDetails, {marginBottom: 5}, styles.contentText]}>Start Date:</Text>
+                    <Text style={[styles.termData, styles.contentText]}>
+                        {monthNames[this.props.startDate.getMonth()]} {this.props.startDate.getDate()}, {this.props.startDate.getFullYear()}
+                    </Text>
+                </View>
+                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('EditDetails')}>
+                    <Text style={styles.buttonText}>EDIT DETAILS</Text>
                 </TouchableOpacity>
             </View>
         );
     }
 
     recurringExpensesCard() {
-        return(
-            <View style={[styles.card, { height: this.props.recurringExpenses.length > 3 ? '50%':this.props.recurringExpenses.length + 130}]}>
-                <FlatList
-                    style={{padding: 10}}
-                    data={this.props.recurringExpenses}
-                    renderItem={({item}) => this.expenseListItem(item)}
-                    ItemSeparatorComponent={this.renderSeparator}
-                />
-                <View>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>ADD EXPENSE</Text> 
-                    </TouchableOpacity>
+        // return(
+        //     <View style={[styles.card, { height: this.props.recurringExpenses.length > 3 ? '50%':this.props.recurringExpenses.length + 130}]}>
+        //         <FlatList
+        //             style={{padding: 10}}
+        //             data={this.props.recurringExpenses}
+        //             renderItem={({item}) => this.expenseListItem(item)}
+        //             ItemSeparatorComponent={this.renderSeparator}
+        //         />
+        //         <View>
+        //             <TouchableOpacity style={styles.button}>
+        //                 <Text style={styles.buttonText}>ADD EXPENSE</Text> 
+        //             </TouchableOpacity>
+        //         </View>
+        //     </View>
+        // );
+
+        if (this.props.recurringExpenses.length === 0) {
+            return (
+                <View style={[styles.card]}>
+                    <View>
+                        <TouchableOpacity style={[styles.button, {marginTop: 0}]} onPress={() => this.props.navigation.navigate('AddExpense')}>
+                            <Text style={styles.buttonText}>ADD EXPENSE</Text> 
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
-        );
+            );
+        } else {
+            return(
+                // <View style={[styles.card, { height: this.props.recurringExpenses.length > 3 ? '45%': this.props.recurringExpenses.length * 90}]}>
+                <View style={[styles.card, { height: '45%'}]}>
+                    <FlatList
+                        style={{padding: 10}}
+                        data={this.props.recurringExpenses}
+                        renderItem={({item}) => this.expenseListItem(item)}
+                        ItemSeparatorComponent={this.renderSeparator}
+                    />
+                    <View>
+                        <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('AddExpense')}>
+                            <Text style={styles.buttonText}>ADD EXPENSE</Text> 
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            );
+        }
     }
     
     render() {
@@ -105,7 +146,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     header: {
-        width: '95%',
+        width: '90%',
         marginTop: 0,
     },
     button: {
@@ -122,7 +163,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     card: {
-        width: '95%',
+        width: '90%',
         marginTop: 10,
         marginBottom: 10,
         backgroundColor: 'white',

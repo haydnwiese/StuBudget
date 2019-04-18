@@ -8,8 +8,11 @@ import firebase from 'firebase';
 
 import DetailsScreen from './Screens/DetailsScreen';
 import HomeScreen from './Screens/HomeScreen';
-import PurchasesScreen from './Screens/PurchasesScreen';
+import AddPurchasesScreen from './Screens/AddPurchasesScreen';
 import EditDetailsScreen from './Screens/EditDetailsScreen';
+import AddExpenseScreen from './Screens/AddExpenseScreen';
+import EditGoalScreen from './Screens/EditGoalScreen';
+import ViewPurchasesScreen from './Screens/ViewPurchasesScreen';
 
 function reducer(
   state = {
@@ -22,6 +25,7 @@ function reducer(
     weeklyHours: 0,
     hourlyPay: 0,
     recurringExpenses: [],
+    startDate: new Date()
   }, action
 ) 
 {
@@ -29,15 +33,20 @@ function reducer(
     case 'INITIAL_DATA':
       return {  
         ...state,
-        savingsGoal: action.payload.savingsGoal,
-        weeklyAllowance: action.payload.weeklyAllowance,
+        savingsGoal: action.payload.savingsGoal || 0,
         purchases: action.payload.purchases,
-        remainingWeeks: action.payload.remainingWeeks,
-        remainingAmount: action.payload.remainingAmount,
         termLength: action.payload.termLength,
         weeklyHours: action.payload.weeklyHours,
         hourlyPay: action.payload.hourlyPay,
-        recurringExpenses: action.payload.recurringExpenses,
+        recurringExpenses: action.payload.recurringExpenses || [],
+        startDate: action.payload.startDate,
+      };
+    case 'UPDATE_SPENDING':
+      return {
+        ...state,
+        weeklyAllowance: action.payload.weeklyAllowance,
+        remainingWeeks: action.payload.remainingWeeks,
+        remainingAmount: action.payload.remainingAmount,
       };
     default:
       return state;
@@ -70,6 +79,7 @@ let DetailsContainer = connect(
     weeklyHours: state.weeklyHours,
     hourlyPay: state.hourlyPay,
     recurringExpenses: state.recurringExpenses,
+    startDate: state.startDate,
   })
 )(DetailsScreen);
 
@@ -84,21 +94,35 @@ let HomeContainer = connect(
     weeklyHours: state.weeklyHours,
     hourlyPay: state.hourlyPay,
     recurringExpenses: state.recurringExpenses,
+    startDate: state.startDate,
   })
 )(HomeScreen);
 
-let PurchasesContainer = connect(state => ({ purchases: state.purchases }))(PurchasesScreen);
+let PurchasesContainer = connect(state => ({ purchases: state.purchases }))(AddPurchasesScreen);
 
 let EditDetailsContainer = connect(state => ({ savingsGoal: state.savingsGoal }))(EditDetailsScreen);
 
-const HomeStack = createStackNavigator({
-  Home: HomeContainer,
-});
+let AddExpenseContainer = connect(state => ({ recurringExpenses: state.recurringExpenses }))(AddExpenseScreen);
+
+let EditGoalContainer = connect(state => ({ savingsGoal: state.savingsGoal }))(EditGoalScreen);
+
+let ViewPurchasesContainer = connect(state => ({ purchases: state.purchases }))(ViewPurchasesScreen);
+
+const HomeStack = createStackNavigator(
+  {
+    Home: HomeContainer,
+    EditGoal: EditGoalContainer,
+    ViewPurchases: ViewPurchasesContainer,
+  },
+  { headerMode: 'screen' },
+  { initialRouteName: 'Home' },
+);
 
 const DetailsStack = createStackNavigator(
   {
     Details: DetailsContainer,
     EditDetails: EditDetailsContainer,
+    AddExpense: AddExpenseContainer,
   },
   { headerMode: 'screen' },
   { initialRouteName: 'Details' },
