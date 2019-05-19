@@ -7,3 +7,5 @@ The user enters the details for their earnings and length of the term, as well a
 After the savings goal has been set, the user will be updated with a weekly spending allowance to meet their savings goal.
 
 When the user adds miscellaneous purchases, the remaining allowance for the given week will be updated.
+
+User data is stored using Firebase
