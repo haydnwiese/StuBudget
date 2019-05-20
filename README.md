@@ -10,7 +10,7 @@ When the user adds miscellaneous purchases, the remaining allowance for the give
 
 User data is stored using Firebase
 
-<p align="left">
+<p align="center">
   <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/Components/Projects/appBasicFunc.gif" width="250">
 </p>
 
