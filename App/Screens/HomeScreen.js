@@ -44,7 +44,6 @@ export default class HomeScreen extends React.Component {
 
     async componentWillMount() {
         await this.getData();
-        //this.deletePurchase('-Lacx7P6LUj5x08La0XW');
     }
 
     calculateDetails = () => {
@@ -177,7 +176,6 @@ export default class HomeScreen extends React.Component {
                     hourlyPay: data.termDetails.hourlyPay,
                     recurringExpenses: data.recurringExpenses,
                     startDate: new Date(data.termDetails.startDate)
-                    //startDate: new Date(data.termDetails.startDate.year, data.termDetails.startDate.month, data.termDetails.startDate.day)
                 }
             });
 
@@ -363,15 +361,6 @@ export default class HomeScreen extends React.Component {
                         <Text style={styles.buttonText}>ALL PURCHASES</Text> 
                     </TouchableOpacity>
                 </View>
-
-                // <View style={[styles.card, {height: (this.props.purchases.length < 10) ? (this.props.length * 40) : 400}]}>
-                //     <FlatList
-                //         style={{padding: 10}}
-                //         data={this.props.purchases}
-                //         renderItem={({item}) => this.purchaseItem(item)}
-                //         ItemSeparatorComponent={this.renderSeparator}
-                //     />
-                // </View>
             );
         }
     }

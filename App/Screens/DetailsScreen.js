@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { Card, Divider } from 'react-native-elements';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { Divider } from 'react-native-elements';
 
 export default class DetailsScreen extends React.Component {
     constructor(props) {
@@ -64,22 +64,6 @@ export default class DetailsScreen extends React.Component {
     }
 
     recurringExpensesCard() {
-        // return(
-        //     <View style={[styles.card, { height: this.props.recurringExpenses.length > 3 ? '50%':this.props.recurringExpenses.length + 130}]}>
-        //         <FlatList
-        //             style={{padding: 10}}
-        //             data={this.props.recurringExpenses}
-        //             renderItem={({item}) => this.expenseListItem(item)}
-        //             ItemSeparatorComponent={this.renderSeparator}
-        //         />
-        //         <View>
-        //             <TouchableOpacity style={styles.button}>
-        //                 <Text style={styles.buttonText}>ADD EXPENSE</Text> 
-        //             </TouchableOpacity>
-        //         </View>
-        //     </View>
-        // );
-
         if (this.props.recurringExpenses.length === 0) {
             return (
                 <View style={[styles.card]}>
@@ -92,7 +76,6 @@ export default class DetailsScreen extends React.Component {
             );
         } else {
             return(
-                // <View style={[styles.card, { height: this.props.recurringExpenses.length > 3 ? '45%': this.props.recurringExpenses.length * 90}]}>
                 <View style={[styles.card, { height: '45%'}]}>
                     <FlatList
                         style={{padding: 10}}

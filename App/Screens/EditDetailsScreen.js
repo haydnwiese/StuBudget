@@ -5,10 +5,6 @@ export default class EditDetailsScreen extends React.Component {
     
     static navigationOptions = {
         title: 'Edit Details',
-        // headerStyle: {
-        //   backgroundColor: '#dddddd',
-        //   borderBottomWidth: 0
-        // },
         titleStyle: {
             fontFamily: 'HelveticaNeue-Bold',
             fontSize: 25,

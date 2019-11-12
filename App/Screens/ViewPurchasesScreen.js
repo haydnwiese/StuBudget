@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList , StyleSheet, Button, TouchableOpacity, SectionList } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity, SectionList } from 'react-native';
 import Modal from 'react-native-modalbox';
 import { Divider } from 'react-native-elements';
 import { Haptic } from 'expo';
@@ -17,10 +17,6 @@ export default class ViewPurchasesScreen extends React.Component {
 
     static navigationOptions = {
         title: 'All Purchases',
-        // headerStyle: {
-        //   backgroundColor: '#dddddd',
-        //   borderBottomWidth: 0
-        // },
         titleStyle: {
             fontFamily: 'HelveticaNeue-Bold',
             fontSize: 25,
@@ -40,14 +36,13 @@ export default class ViewPurchasesScreen extends React.Component {
             ];
 
             let purchases = this.props.purchases;
-            let sectionCount = 1, date = 0;
+            let date = 0;
 
             let purchaseSections = [];
 
             for (let i = 0; i < purchases.length; i++) {
                 if (purchases[i].date !== date) {
                     let dateObj = new Date(purchases[i].date);
-                    //purchases[i].title = `${monthNames[dateObj.getMonth()]} ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
                     newObj = {
                         title: `${monthNames[dateObj.getMonth()]} ${dateObj.getDate()}, ${dateObj.getFullYear()}`,
                         data: []
@@ -75,7 +70,7 @@ export default class ViewPurchasesScreen extends React.Component {
         }   
     }
 
-    purchaseSelect = async(item, index) => {
+    purchaseSelect = async(item) => {
         Haptic.impact(Haptic.ImpactFeedbackStyle.Light);
 
         await this.setState({
@@ -98,7 +93,7 @@ export default class ViewPurchasesScreen extends React.Component {
         );
     }
 
-    renderSectionItems(item, key) {
+    renderSectionItems(item) {
         return(
             <TouchableOpacity style={{ backgroundColor:'white', width: '100%', padding: 10 }} onPress={() => this.purchaseSelect(item)}>
                 <View style={{flexDirection: 'row'}}>
@@ -136,21 +131,9 @@ export default class ViewPurchasesScreen extends React.Component {
         return(
             <View style={styles.container}>
                 <View style={styles.card}>
-                    {/* <FlatList
-                        style={{padding: 10}}
-                        data={this.props.purchases}
-                        renderItem={({item, index}) => this.purchaseItem(item, index)}
-                        ItemSeparatorComponent={this.renderSeparator}
-                        //keyExtractor={()}
-                    /> */}
                     <SectionList
-                        renderItem={({item, index, section}) => this.renderSectionItems(item, index)}
+                        renderItem={({item, index}) => this.renderSectionItems(item)}
                         renderSectionHeader={({section: {title}}) => this.renderSectionHeader(title)}
-                        // sections={[
-                        //     {title: 'Title1', data: ['item1', 'item2']},
-                        //     {title: 'Title2', data: ['item3', 'item4']},
-                        //     {title: 'Title3', data: ['item5', 'item6']},
-                        // ]}
                         sections={this.state.groupedPurchases}
                         keyExtractor={(item, index) => item + index}
                         ItemSeparatorComponent={() => this.renderSeparator()}

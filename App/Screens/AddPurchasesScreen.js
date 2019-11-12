@@ -1,16 +1,11 @@
 import React from 'react';
 
 import { 
-    ScrollView, 
     View, 
     Text, 
     StyleSheet, 
     TextInput, 
-    InputAccessoryView, 
-    Button, 
-    Keyboard, 
     TouchableOpacity, 
-    KeyboardAvoidingView,
     DatePickerIOS,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';

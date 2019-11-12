@@ -13,10 +13,6 @@ class EditGoalScreen extends React.Component {
     
     static navigationOptions = {
         title: 'Savings Goal',
-        // headerStyle: {
-        //   backgroundColor: '#dddddd',
-        //   borderBottomWidth: 0
-        // },
         titleStyle: {
             fontFamily: 'HelveticaNeue-Bold',
             fontSize: 25,
@@ -34,9 +30,6 @@ class EditGoalScreen extends React.Component {
         let savingsGoal = this.state.savingsGoal;
 
         firebase.database().ref('all').update({savingsGoal: savingsGoal});
-        // firebase.database().ref('all/').set({
-        //     savingsGoal
-        // });
     }
 
     savingsGoalInput() {

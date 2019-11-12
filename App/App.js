@@ -1,8 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator, createAppContainer, StackViewTransitionConfigs } from "react-navigation";
+import { createStackNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation";
 import { Ionicons } from 'react-native-vector-icons';
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import firebase from 'firebase';
 
@@ -27,8 +26,7 @@ function reducer(
     recurringExpenses: [],
     startDate: new Date()
   }, action
-) 
-{
+) {
   switch (action.type) {
     case 'INITIAL_DATA':
       return {  

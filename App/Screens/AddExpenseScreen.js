@@ -14,10 +14,6 @@ class AddExpenseScreen extends React.Component {
 
     static navigationOptions = {
         title: 'Add Expense',
-        // headerStyle: {
-        //   backgroundColor: '#dddddd',
-        //   borderBottomWidth: 0
-        // },
         titleStyle: {
             fontFamily: 'HelveticaNeue-Bold',
             fontSize: 25,
