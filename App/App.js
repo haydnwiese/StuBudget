@@ -3,18 +3,18 @@ import {
   createStackNavigator, 
   createBottomTabNavigator, 
   createAppContainer } from "react-navigation";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from '../node_modules/react-native-vector-icons/Ionicons';
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import firebase from 'firebase';
 
-import DetailsScreen from './Screens/DetailsScreen';
-import HomeScreen from './Screens/HomeScreen';
-import AddPurchasesScreen from './Screens/AddPurchasesScreen';
-import EditDetailsScreen from './Screens/EditDetailsScreen';
-import AddExpenseScreen from './Screens/AddExpenseScreen';
-import EditGoalScreen from './Screens/EditGoalScreen';
-import ViewPurchasesScreen from './Screens/ViewPurchasesScreen';
+import DetailsScreen from './screens/DetailsScreen';
+import HomeScreen from './screens/HomeScreen';
+import AddPurchasesScreen from './screens/AddPurchasesScreen';
+import EditDetailsScreen from './screens/EditDetailsScreen';
+import AddExpenseScreen from './screens/AddExpenseScreen';
+import EditGoalScreen from './screens/EditGoalScreen';
+import ViewPurchasesScreen from './screens/ViewPurchasesScreen';
 
 function reducer(
   state = {

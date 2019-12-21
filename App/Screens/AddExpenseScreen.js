@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
 import { View, ScrollView, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { ActionButton } from '../components/CommonListItems';
 
 class AddExpenseScreen extends React.Component {
     constructor(props) {
@@ -107,36 +108,13 @@ class AddExpenseScreen extends React.Component {
                 {this.titleInput()}
                 {this.amountInput()}
 
-                <TouchableOpacity style={styles.button} onPress={() => this.onSubmit()}>
-                    <Text style={styles.buttonText}>DONE</Text>
-                </TouchableOpacity>
+                <ActionButton title="DONE" style={styles.button} onPress={() => this.onSubmit()} />
             </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    headerText: {
-        fontFamily: 'HelveticaNeue-Bold',
-        fontSize: 25,
-        fontWeight:'800',
-        textAlign: 'left',
-    },
-    header: {
-        width: '95%',
-        marginTop: 0,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#ededed',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-    },
-    expenseTitle: {
-        flex: 2,
-        fontSize: 18,
-        marginVertical: 8,
-    },
     expenseAmount: {
         textAlign: 'left',
         fontSize: 18,
@@ -160,13 +138,6 @@ const styles = StyleSheet.create({
         marginTop: 25,
         backgroundColor: 'black',
         paddingVertical: 7,
-    },
-    buttonText: {
-        fontFamily: 'HelveticaNeue-Bold',
-        fontSize: 18,
-        fontWeight: '500',
-        color: 'white',
-        textAlign: 'center',
     },
 });
 

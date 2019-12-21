@@ -6,6 +6,9 @@ import Modal from 'react-native-modalbox';
 import firebase from 'firebase';
 import Carousel from 'react-native-snap-carousel';
 
+import {Header, ActionButton} from '../components/CommonListItems';
+import { commonStyles, commonNavigationOptions } from '../styles/CommonStyles';
+
 export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -34,12 +37,7 @@ export default class HomeScreen extends React.Component {
         };
     }
 
-    static navigationOptions = {
-        headerStyle: {
-            backgroundColor: '#ededed',
-            borderBottomWidth: 0
-        },
-    };
+    static navigationOptions = commonNavigationOptions;
 
     async componentWillMount() {
         await this.getData();
@@ -318,7 +316,7 @@ export default class HomeScreen extends React.Component {
                     onClosed={() => this.setState({isOpen: false})}
                 >
                 <View style={{flexDirection: 'row', justifyContent: 'flex-start', marginVertical: 10}}>
-                    <Text style={[styles.headerText, {marginLeft: 15, marginRight: 45}]}>Purchase Info</Text>
+                    <Text style={[commonStyles.headerText, {marginLeft: 15, marginRight: 45}]}>Purchase Info</Text>
                     <Button title='Remove' />
                 </View>
 
@@ -348,18 +346,14 @@ export default class HomeScreen extends React.Component {
         if (this.props.purchases.length === 0) {
             return (
                 <View style={[styles.card, {height: (this.props.purchases.length < 10) ? (this.props.length * 40) : 400}]} >
-                    <TouchableOpacity style={[styles.button, {width: '70%'}]} onPress={() => this.props.navigation.navigate('Purchases')} >
-                        <Text style={styles.buttonText}>ADD FIRST PURCHASE</Text> 
-                    </TouchableOpacity>
+                    <ActionButton title="ADD FIRST PURCHASE" style={styles.button} onPress={() => this.props.navigation.navigate('Purchases')} />
                 </View>
             );
         } else {
             return(
                 <View style={styles.card}>
                     {purchasesRender}
-                    <TouchableOpacity style={[styles.button, {width: '60%'}]} onPress={() => this.props.navigation.navigate('ViewPurchases')}>
-                        <Text style={styles.buttonText}>ALL PURCHASES</Text> 
-                    </TouchableOpacity>
+                    <ActionButton title="ALL PURCHASES" style={styles.button} onPress={() => this.props.navigation.navigate('ViewPurchases')} />
                 </View>
             );
         }
@@ -386,25 +380,18 @@ export default class HomeScreen extends React.Component {
     render() {
         if (this.state.loading) {
         return (
-            <View style={styles.container}>
+            <View style={commonStyles.container}>
                 <ActivityIndicator style={{flex: 1}} size="large" color='black' />
             </View>
         );
         } else {
         return (
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.headerText}>Dashboard</Text> 
-                </View>
+            <View style={commonStyles.container}>
+                <Header title="Dashboard" withMargin={true} />
 
                 <ScrollView 
-                    style={{flex: 1, width: '90%', marginBottom: 10}} 
-                    contentContainerStyle={{
-                        flexGrow: 1, 
-                        justifyContent: 'flex-start', 
-                        backgroundColor: '#ededed',
-                        alignContent: 'center'
-                }}>
+                    style={{flex: 1, width: '90%'}} 
+                    contentContainerStyle={commonStyles.scrollViewContainer}>
                     {this.savingsGoalCard()}
 
                     <View style={styles.subHead}>
@@ -438,13 +425,6 @@ const styles = StyleSheet.create({
         width: '80%',
         borderRadius: 15,
     },
-    headerText: {
-        fontFamily: 'HelveticaNeue-Bold',
-        fontSize: 25,
-        fontWeight:'800',
-        textAlign: 'left',
-        marginBottom: 10,
-    },
     contentText: {
         fontFamily: 'HelveticaNeue-Light',
     },
@@ -471,22 +451,12 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         textAlign: 'left',
     },
-    header: {
-        width: '90%',
-        marginTop: 0,
-    },
     button: {
         alignSelf: 'center',
-        width: '50%',
+        width: '60%',
         marginTop: 10,
         backgroundColor: 'black',
         paddingVertical: 7,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#ededed',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
     },
     card: {
         width: '100%',
