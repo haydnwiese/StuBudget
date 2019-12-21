@@ -8,6 +8,8 @@ import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import firebase from 'firebase';
 
+import {reducer} from './Utilities/ReduxHelper';
+
 import DetailsScreen from './screens/DetailsScreen';
 import HomeScreen from './screens/HomeScreen';
 import AddPurchasesScreen from './screens/AddPurchasesScreen';
@@ -16,52 +18,13 @@ import AddExpenseScreen from './screens/AddExpenseScreen';
 import EditGoalScreen from './screens/EditGoalScreen';
 import ViewPurchasesScreen from './screens/ViewPurchasesScreen';
 
-function reducer(
-  state = {
-    savingsGoal: 0,
-    weeklyAllowance: 0,
-    purchases: [],
-    remainingWeeks: 0,
-    remainingAmount: 0,
-    termLength: 0,
-    weeklyHours: 0,
-    hourlyPay: 0,
-    recurringExpenses: [],
-    startDate: new Date()
-  }, action
-) {
-  switch (action.type) {
-    case 'INITIAL_DATA':
-      return {  
-        ...state,
-        savingsGoal: action.payload.savingsGoal || 0,
-        purchases: action.payload.purchases,
-        termLength: action.payload.termLength,
-        weeklyHours: action.payload.weeklyHours,
-        hourlyPay: action.payload.hourlyPay,
-        recurringExpenses: action.payload.recurringExpenses || [],
-        startDate: action.payload.startDate,
-      };
-    case 'UPDATE_SPENDING':
-      return {
-        ...state,
-        weeklyAllowance: action.payload.weeklyAllowance,
-        remainingWeeks: action.payload.remainingWeeks,
-        remainingAmount: action.payload.remainingAmount,
-      };
-    default:
-      return state;
-  }
-}
-
-var config = {
+const config = {
     databaseURL: "https://co-op-budget-app.firebaseio.com",
     projectId: "co-op-budget-app",
 };
-
 firebase.initializeApp(config);
 
-let store = createStore(reducer);
+const store = createStore(reducer);
 
 export default class App extends React.Component {
   render() {
@@ -133,7 +96,7 @@ const PurchasesStack = createStackNavigator({
   Purchases: PurchasesContainer,
 });
 
-let Navigation = createAppContainer(createBottomTabNavigator(
+const Navigation = createAppContainer(createBottomTabNavigator(
   {
     Details: { screen: DetailsStack },
     Home: { screen: HomeStack },
