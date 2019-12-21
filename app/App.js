@@ -8,7 +8,7 @@ import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import firebase from 'firebase';
 
-import {reducer} from './Utilities/ReduxHelper';
+import {reducer} from './utilities/ReduxHelper';
 
 import DetailsScreen from './screens/DetailsScreen';
 import HomeScreen from './screens/HomeScreen';
