@@ -4,7 +4,6 @@ import { Divider } from 'react-native-elements';
 import PieChart from 'react-native-pie-chart';
 import Modal from 'react-native-modalbox';
 import firebase from 'firebase';
-import { Haptic } from 'expo';
 import Carousel from 'react-native-snap-carousel';
 
 export default class HomeScreen extends React.Component {
@@ -195,7 +194,8 @@ export default class HomeScreen extends React.Component {
     }
 
     purchaseSelect = async(item, index) => {
-        Haptic.impact(Haptic.ImpactFeedbackStyle.Light);
+        // TODO: Figure out haptic without using expo
+        // Haptic.impact(Haptic.ImpactFeedbackStyle.Light);
 
         await this.setState({
             isOpen: true,

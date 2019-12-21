@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity, SectionList } from 'react-native';
 import Modal from 'react-native-modalbox';
 import { Divider } from 'react-native-elements';
-import { Haptic } from 'expo';
 
 export default class ViewPurchasesScreen extends React.Component {
     constructor(props) {
@@ -71,7 +70,8 @@ export default class ViewPurchasesScreen extends React.Component {
     }
 
     purchaseSelect = async(item) => {
-        Haptic.impact(Haptic.ImpactFeedbackStyle.Light);
+        // TODO: Figure out haptic without using expo
+        // Haptic.impact(Haptic.ImpactFeedbackStyle.Light);
 
         await this.setState({
             isOpen: true,

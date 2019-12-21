@@ -7,12 +7,13 @@ import {
     TextInput, 
     TouchableOpacity, 
     DatePickerIOS,
+    ScrollView,
+    Picker
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import IOSPicker from 'react-native-ios-picker';
 import firebase from 'firebase';
 import Modal from 'react-native-modalbox';
-import { Haptic } from 'expo';
 
 console.disableYellowBox = true;
 
@@ -114,7 +115,8 @@ export default class AddPurchasesScreen extends React.Component {
             <TouchableOpacity 
                 style={styles.input} 
                 onPress={() => {
-                    Haptic.impact(Haptic.ImpactFeedbackStyle.Light);
+                    // TODO: Figure out haptic without using expo
+                    // Haptic.impact(Haptic.ImpactFeedbackStyle.Light);
                     this.setState({isOpen: true});
                     }
                 }
@@ -136,15 +138,17 @@ export default class AddPurchasesScreen extends React.Component {
     }
 
     renderPicker() {
-        const data = ['Food', 'Entertainment', 'Clothing', 'Electronics'];
         return (
-            <View style={styles.input}>
-                <IOSPicker 
-                    data={data}
+            <View style={[styles.input, {paddingVertical: 0, margin: 0}]}>
+                <Picker 
                     selectedValue={this.state.category}
-                    textStyle={[styles.contentText, {fontSize: 18, fontWeight: '300'}]}
-                    onValueChange={(value) => this.setState({category: value})}
-                />
+                    itemStyle={{fontFamily: 'HelveticaNeue-Light', fontSize: 18, fontWeight: '300'}}
+                    onValueChange={(value) => this.setState({category: value})}>
+                        <Picker.Item label="Food" value="Food" />
+                        <Picker.Item label="Entertainment" value="Entertainment" />
+                        <Picker.Item label="Clothing" value="Clothing" />
+                        <Picker.Item label="Electronics" value="Electronics" />
+                </Picker>
             </View>
         );
     }

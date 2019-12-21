@@ -1,6 +1,9 @@
 import React from 'react';
-import { createStackNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation";
-import { Ionicons } from 'react-native-vector-icons';
+import { 
+  createStackNavigator, 
+  createBottomTabNavigator, 
+  createAppContainer } from "react-navigation";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import firebase from 'firebase';
