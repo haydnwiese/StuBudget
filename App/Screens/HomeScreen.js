@@ -6,7 +6,7 @@ import Modal from 'react-native-modalbox';
 import firebase from 'firebase';
 import Carousel from 'react-native-snap-carousel';
 
-import {Header, ActionButton} from '../components/CommonListItems';
+import {Header, ActionButton, SubHeader} from '../components/CommonListItems';
 import { commonStyles, commonNavigationOptions } from '../styles/CommonStyles';
 
 export default class HomeScreen extends React.Component {
@@ -44,10 +44,10 @@ export default class HomeScreen extends React.Component {
     }
 
     calculateDetails = () => {
-        let taxAdjustment = 0.821256;
+        const taxAdjustment = 0.821256;
         let purchasesTotal = 0;
         let expensesTotal = 0;
-        let totalEarnings = Math.round(((this.props.hourlyPay * this.props.weeklyHours) * this.props.termLength) * taxAdjustment);
+        const totalEarnings = Math.round(((this.props.hourlyPay * this.props.weeklyHours) * this.props.termLength) * taxAdjustment);
         let remainingAmount = totalEarnings;
 
         for (let purchase of this.props.purchases) {
@@ -59,17 +59,20 @@ export default class HomeScreen extends React.Component {
         }
         expensesTotal *= Math.round(this.props.termLength / 4);
 
+        // Find today's date and caculate number of weeks remaining in term
         let today = new Date();
         today = today.getTime();
-        let remainingWeeks = this.props.termLength - parseInt((today - this.props.startDate) / 604800000);
+        const remainingWeeks = this.props.termLength - parseInt((today - this.props.startDate) / 604800000);
 
+        // Calculate the weekly allowance for the rest of the term
         remainingAmount -= this.props.savingsGoal + purchasesTotal + expensesTotal;
-        let weeklyAllowance = Math.floor((remainingAmount / remainingWeeks) * 100) / 100;
+        const weeklyAllowance = Math.floor((remainingAmount / remainingWeeks) * 100) / 100;
 
-        let currentSavings = totalEarnings - (purchasesTotal + expensesTotal);
+        const currentSavings = totalEarnings - (purchasesTotal + expensesTotal);
 
-        let currentWeekPurchases = this.getPurchasesForWeek();
-        let remainingWeekly = weeklyAllowance - currentWeekPurchases;
+        // Calculate the remaining allowance for the current week
+        const currentWeekPurchases = this.getPurchasesForWeek();
+        const remainingWeekly = weeklyAllowance - currentWeekPurchases;
 
         this.setState({
             spendingData: [
@@ -89,6 +92,7 @@ export default class HomeScreen extends React.Component {
             ]
         });
 
+        // Update purchases in each category for spending breakdown
         this.getPurchasesByCategory();
     }
 
@@ -394,9 +398,7 @@ export default class HomeScreen extends React.Component {
                     contentContainerStyle={commonStyles.scrollViewContainer}>
                     {this.savingsGoalCard()}
 
-                    <View style={styles.subHead}>
-                        <Text style={styles.subHeadText}>Spending</Text>
-                    </View>
+                    <SubHeader title="Spending" />
                     <Carousel
                         data={this.state.spendingData}
                         renderItem={(item) => this.spendingCard(item)}
@@ -405,9 +407,7 @@ export default class HomeScreen extends React.Component {
                         activeSlideAlignment='start'
                     />
 
-                    <View style={styles.subHead}>
-                        <Text style={styles.subHeadText}>Purchases</Text>
-                    </View>
+                    <SubHeader title="Purchases" />
                     {this.purchasesCard()}
                 </ScrollView>
                 {this.purchaseDetailsModal()}
