@@ -15,12 +15,12 @@ When the user adds miscellaneous purchases, the remaining allowance for the give
 </h4>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/Components/Projects/appBasicFunc.gif" width="250">
+  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/resources/projects/appBasicFunc.gif" width="250">
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/Components/Projects/coopScreenshot3.png" width="250">
-  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/Components/Projects/coopScreenshot1.png" width="250">
-  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/Components/Projects/coopScreenshot2.png" width="250">
+  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/resources/projects/coopScreenshot3.png" width="250">
+  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/resources/projects/coopScreenshot1.png" width="250">
+  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/resources/projects/coopScreenshot2.png" width="250">
 </p>
 
