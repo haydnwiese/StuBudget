@@ -1,4 +1,4 @@
-# Co-op-Budgeting-App
+# StuBudget
 
 <h3>
   A React Native mobile application allowing co-op students to budget for their work terms.
