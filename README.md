@@ -10,17 +10,11 @@ After the savings goal has been set, the user will be updated with a weekly spen
 
 When the user adds miscellaneous purchases, the remaining allowance for the given week will be updated.
 
-<h4>
-  User data is stored using Firebase
-</h4>
+User data is stored using Firebase
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/resources/projects/appBasicFunc.gif" width="250">
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/resources/projects/coopScreenshot3.png" width="250">
-  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/resources/projects/coopScreenshot1.png" width="250">
-  <img src="https://raw.githubusercontent.com/haydnwiese/Website-new/master/src/resources/projects/coopScreenshot2.png" width="250">
+  <img src="https://github.com/haydnwiese/Personal-Website/blob/master/src/resources/projects/budgeting_app/screenshot1.png" height="550">
+  <img src="https://github.com/haydnwiese/Personal-Website/blob/master/src/resources/projects/budgeting_app/screenshot2.png" height="550">
+  <img src="https://github.com/haydnwiese/Personal-Website/blob/master/src/resources/projects/budgeting_app/screenshot3.png" height="550">
 </p>
 
