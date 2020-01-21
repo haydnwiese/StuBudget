@@ -10,7 +10,7 @@ After the savings goal has been set, the user will be updated with a weekly spen
 
 When the user adds miscellaneous purchases, the remaining allowance for the given week will be updated.
 
-User data is stored using Firebase
+User data is stored using Firebase.
 
 <p align="center">
   <img src="https://github.com/haydnwiese/Personal-Website/blob/master/src/resources/projects/budgeting_app/screenshot1.png" height="550">
