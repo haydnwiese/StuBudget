@@ -24,9 +24,9 @@ class EditGoalScreen extends React.Component {
 
     onSubmit = async (input) => {
         if (!input) {
-            await this.setState({ savingsGoal: 0 });
+            this.setState({ savingsGoal: 0 });
         } else {
-            await this.setState({ savingsGoal: input });
+            this.setState({ savingsGoal: input });
         }
 
         let savingsGoal = this.state.savingsGoal;

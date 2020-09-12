@@ -8,15 +8,15 @@ import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import firebase from 'firebase';
 
-import {reducer} from './utilities/ReduxHelper';
+import rootReducer from './reducers';
 
-import DetailsScreen from './screens/DetailsScreen';
-import HomeScreen from './screens/HomeScreen';
-import AddPurchasesScreen from './screens/AddPurchasesScreen';
-import EditDetailsScreen from './screens/EditDetailsScreen';
-import AddExpenseScreen from './screens/AddExpenseScreen';
-import EditGoalScreen from './screens/EditGoalScreen';
-import ViewPurchasesScreen from './screens/ViewPurchasesScreen';
+import DetailsContainer from './containers/detailsContainer';
+import HomeContainer from './containers/homeContainer';
+import AddPurchasesScreen from './components/AddPurchasesScreen';
+import EditDetailsScreen from './components/EditDetailsScreen';
+import AddExpenseContainer from './containers/addExpenseContainer';
+import EditGoalContainer from './containers/editGoalContainer';
+import PurchaseListContainer from './containers/purchaseListContainer';
 
 const config = {
     databaseURL: "https://co-op-budget-app.firebaseio.com",
@@ -24,7 +24,7 @@ const config = {
 };
 firebase.initializeApp(config);
 
-const store = createStore(reducer);
+const store = createStore(rootReducer);
 
 export default class App extends React.Component {
   render() {
@@ -36,47 +36,11 @@ export default class App extends React.Component {
   }
 }
 
-// Connect the screens to Redux
-let DetailsContainer = connect(
-  state => ({ 
-    termLength: state.termLength,
-    weeklyHours: state.weeklyHours,
-    hourlyPay: state.hourlyPay,
-    recurringExpenses: state.recurringExpenses,
-    startDate: state.startDate,
-  })
-)(DetailsScreen);
-
-let HomeContainer = connect(
-  state => ({ 
-    savingsGoal: state.savingsGoal,
-    weeklyAllowance: state.weeklyAllowance,
-    purchases: state.purchases,
-    remainingWeeks: state.remainingWeeks,
-    remainingAmount: state.remainingAmount,
-    termLength: state.termLength,
-    weeklyHours: state.weeklyHours,
-    hourlyPay: state.hourlyPay,
-    recurringExpenses: state.recurringExpenses,
-    startDate: state.startDate,
-  })
-)(HomeScreen);
-
-let PurchasesContainer = connect(state => ({ purchases: state.purchases }))(AddPurchasesScreen);
-
-let EditDetailsContainer = connect(state => ({ savingsGoal: state.savingsGoal }))(EditDetailsScreen);
-
-let AddExpenseContainer = connect(state => ({ recurringExpenses: state.recurringExpenses }))(AddExpenseScreen);
-
-let EditGoalContainer = connect(state => ({ savingsGoal: state.savingsGoal }))(EditGoalScreen);
-
-let ViewPurchasesContainer = connect(state => ({ purchases: state.purchases }))(ViewPurchasesScreen);
-
 const HomeStack = createStackNavigator(
   {
     Home: HomeContainer,
     EditGoal: EditGoalContainer,
-    ViewPurchases: ViewPurchasesContainer,
+    ViewPurchases: PurchaseListContainer,
   },
   { headerMode: 'screen' },
   { initialRouteName: 'Home' },
@@ -85,7 +49,7 @@ const HomeStack = createStackNavigator(
 const DetailsStack = createStackNavigator(
   {
     Details: DetailsContainer,
-    EditDetails: EditDetailsContainer,
+    EditDetails: EditDetailsScreen,
     AddExpense: AddExpenseContainer,
   },
   { headerMode: 'screen' },
@@ -93,7 +57,7 @@ const DetailsStack = createStackNavigator(
 );
 
 const PurchasesStack = createStackNavigator({
-  Purchases: PurchasesContainer,
+  Purchases: AddPurchasesScreen,
 });
 
 const Navigation = createAppContainer(createBottomTabNavigator(

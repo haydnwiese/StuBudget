@@ -28,7 +28,7 @@ class AddExpenseScreen extends React.Component {
             let title = this.state.title;
             let amount = this.state.amount;
 
-            await firebase.database().ref('all/recurringExpenses/').push({
+            firebase.database().ref('all/recurringExpenses/').push({
                 title,
                 amount,
                 key
