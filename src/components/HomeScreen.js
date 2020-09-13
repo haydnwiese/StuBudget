@@ -9,6 +9,11 @@ import Carousel from 'react-native-snap-carousel';
 import {Header, ActionButton, SubHeader} from '../components/CommonListItems';
 import { commonStyles, commonNavigationOptions } from '../styles/CommonStyles';
 
+import { purchaseCategory } from '../constants';
+const TAX_ADJUSTMENT = 0.821256;
+const PURCHASE_PREVIEW_MAX = 5;
+const WEEK_IN_MS = 604800000, DAY_IN_MS = 86400000, HOUR_IN_MS = 3600000;
+
 export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -44,28 +49,36 @@ export default class HomeScreen extends React.Component {
     }
 
     calculateDetails = () => {
-        const taxAdjustment = 0.821256;
+        const {
+            hourlyPay,
+            weeklyHours,
+            termLength,
+            purchases,
+            recurringExpenses,
+            startDate,
+            savingsGoal
+        } = this.props;
         let purchasesTotal = 0;
         let expensesTotal = 0;
-        const totalEarnings = Math.round(((this.props.hourlyPay * this.props.weeklyHours) * this.props.termLength) * taxAdjustment);
+        const totalEarnings = Math.round(((hourlyPay * weeklyHours) * termLength) * TAX_ADJUSTMENT);
         let remainingAmount = totalEarnings;
 
-        for (let purchase of this.props.purchases) {
+        for (let purchase of purchases) {
             purchasesTotal += purchase.amount;
         }
 
-        for (let expense of this.props.recurringExpenses) {
+        for (let expense of recurringExpenses) {
             expensesTotal += expense.amount;
         }
-        expensesTotal *= Math.round(this.props.termLength / 4);
+        expensesTotal *= Math.round(termLength / 4);
 
         // Find today's date and caculate number of weeks remaining in term
         let today = new Date();
         today = today.getTime();
-        const remainingWeeks = this.props.termLength - parseInt((today - this.props.startDate) / 604800000);
+        const remainingWeeks = termLength - parseInt((today - startDate) / WEEK_IN_MS);
 
         // Calculate the weekly allowance for the rest of the term
-        remainingAmount -= this.props.savingsGoal + purchasesTotal + expensesTotal;
+        remainingAmount -= savingsGoal + purchasesTotal + expensesTotal;
         const weeklyAllowance = Math.floor((remainingAmount / remainingWeeks) * 100) / 100;
 
         const currentSavings = totalEarnings - (purchasesTotal + expensesTotal);
@@ -97,17 +110,18 @@ export default class HomeScreen extends React.Component {
     }
 
     getPurchasesForWeek = () => {
+        let { purchases } = this.props;
         let currentDate = new Date();
         currentDate = currentDate.getTime();
-        currentDate = new Date((currentDate - (currentDate % 86400000)) - (20 * 3600000));
+        currentDate = new Date((currentDate - (currentDate % DAY_IN_MS)) - (20 * HOUR_IN_MS));
 
-        let weekStart = currentDate - (currentDate.getDay() * 86400000);
+        let weekStart = currentDate - (currentDate.getDay() * DAY_IN_MS);
         
         let totalAmount = 0;
-        let purchasesLength = this.props.purchases.length;
+        let purchasesLength = purchases.length;
         for (let i = 0; i < purchasesLength; i++) {
-            if (this.props.purchases[i].date >= weekStart) {
-                totalAmount += this.props.purchases[i].amount;
+            if (purchases[i].date >= weekStart) {
+                totalAmount += purchases[i].amount;
             } else {
                 return totalAmount;
             }
@@ -118,29 +132,30 @@ export default class HomeScreen extends React.Component {
     getPurchasesByCategory = () => {
         let totals = [0, 0, 0, 0];
         let colours = ['#F44336','#2196F3','#FFEB3B', '#4CAF50', '#FF9800'];
-        let totalByCategory = [];
+        let totalByCategory = {};
+        let { purchases } = this.props;
 
         for (let i = 0; i < this.props.purchases.length; i++) {
             switch(this.props.purchases[i].category) {
-                case 'Food':
-                    totals[0] += this.props.purchases[i].amount;
+                case purchaseCategory.FOOD:
+                    totals[purchaseCategory.FOOD] += purchases[i].amount;
                     break;
-                case 'Entertainment':
-                    totals[1] += this.props.purchases[i].amount;
+                case purchaseCategory.ENTERTAINMENT:
+                    totals[purchaseCategory.ENTERTAINMENT] += purchases[i].amount;
                     break;
-                case 'Clothing':
-                    totals[2] += this.props.purchases[i].amount;
+                case purchaseCategory.CLOTHING:
+                    totals[purchaseCategory.CLOTHING] += purchases[i].amount;
                     break;
-                case 'Electronics':
-                    totals[3] += this.props.purchases[i].amount;
+                case purchaseCategory.ELECTRONICS:
+                    totals[purchaseCategory.ELECTRONICS] += purchases[i].amount;
                     break;
             }
         }
 
-        for (let i = 0; i < totals.length; i++) {
+        for (const [index, key] of Object.keys(totals).entries()) {
             totalByCategory.push({
-                total: totals[i],
-                colour: colours[i]
+                total: totals[key],
+                colour: colours[index]
             });
         }
 
@@ -199,7 +214,7 @@ export default class HomeScreen extends React.Component {
         // TODO: Figure out haptic without using expo
         // Haptic.impact(Haptic.ImpactFeedbackStyle.Light);
 
-        await this.setState({
+        this.setState({
             isOpen: true,
             selectedPurchase: this.props.purchases[index],
         });
@@ -282,12 +297,13 @@ export default class HomeScreen extends React.Component {
 
     pieChartKey() {
         if (this.state.totalByCategory.length > 0) {
-            let colours = [], keyRenders= [], availableCategories = ['Food', 'Entertainment', 'Clothing', 'Electronics'], categories = [];
+            let colours = [], keyRenders= [], categories = [];
 
             for (let i = 0; i < this.state.totalByCategory.length; i++) {
                 if (this.state.totalByCategory[i].total > 0) {
                     colours.push(this.state.totalByCategory[i].colour);
-                    categories.push(availableCategories[i]);
+                    let category = Object.keys(purchaseCategory)[i];
+                    categories.push(purchaseCategory[category]);
                 }
             }
 
@@ -315,8 +331,12 @@ export default class HomeScreen extends React.Component {
     }
 
     purchaseDetailsModal() {
+        const {
+            isOpen,
+            selectedPurchase
+        } = state;
         return(
-            <Modal style={[styles.modal, { alignItems: 'left'}]} position={"center"} ref={"modal"} isOpen={this.state.isOpen}
+            <Modal style={[styles.modal, { alignItems: 'left'}]} position={"center"} ref={"modal"} isOpen={isOpen}
                     onClosed={() => this.setState({isOpen: false})}
                 >
                 <View style={{flexDirection: 'row', justifyContent: 'flex-start', marginVertical: 10}}>
@@ -325,39 +345,40 @@ export default class HomeScreen extends React.Component {
                 </View>
 
                 <View style={styles.cardView}>
-                    <Text style={[styles.termDetails, {marginLeft: 15}]}>Category: {this.state.selectedPurchase.category}</Text>
+                    <Text style={[styles.termDetails, {marginLeft: 15}]}>Category: {selectedPurchase.category}</Text>
                 </View>
                 <View style={styles.cardView}>
-                    <Text style={[styles.termDetails, {marginLeft: 15}]}>Amount: ${this.state.selectedPurchase.amount}</Text>
+                    <Text style={[styles.termDetails, {marginLeft: 15}]}>Amount: ${selectedPurchase.amount}</Text>
                 </View>
                 <View style={styles.cardView}>
-                    <Text style={[styles.termDetails, {marginLeft: 15}]}>Description: {this.state.selectedPurchase.description}</Text>
+                    <Text style={[styles.termDetails, {marginLeft: 15}]}>Description: {selectedPurchase.description}</Text>
                 </View>
             </Modal>
         );
     }
 
     purchasesCard() {
+        let { purchases, navigation } = this.props;
         let purchasesRender = [];
         
-        for (let i = 0; i < this.props.purchases.length && i < 5; i++) {
-            purchasesRender.push(this.purchaseItem(this.props.purchases[i], i));
+        for (let i = 0; i < purchases.length && i < PURCHASE_PREVIEW_MAX; i++) {
+            purchasesRender.push(this.purchaseItem(purchases[i], i));
 
-            if (i !== (this.props.purchases.length - 1) && i !== 4)
+            if (i !== (purchases.length - 1) && i !== PURCHASE_PREVIEW_MAX - 1)
                 purchasesRender.push(this.renderSeparator());
         }
 
-        if (this.props.purchases.length === 0) {
+        if (purchases.length === 0) {
             return (
-                <View style={[styles.card, {height: (this.props.purchases.length < 10) ? (this.props.length * 40) : 400}]} >
-                    <ActionButton title="ADD FIRST PURCHASE" style={styles.button} onPress={() => this.props.navigation.navigate('Purchases')} />
+                <View style={[styles.card, {height: (purchases.length < 10) ? (purchases.length * 40) : 400}]} >
+                    <ActionButton title="ADD FIRST PURCHASE" style={styles.button} onPress={() => navigation.navigate('Purchases')} />
                 </View>
             );
         } else {
             return(
                 <View style={styles.card}>
                     {purchasesRender}
-                    <ActionButton title="ALL PURCHASES" style={styles.button} onPress={() => this.props.navigation.navigate('ViewPurchases')} />
+                    <ActionButton title="ALL PURCHASES" style={styles.button} onPress={() => navigation.navigate('ViewPurchases')} />
                 </View>
             );
         }

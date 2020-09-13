@@ -1,17 +1,17 @@
-function reducer(
-    state = {
-      savingsGoal: 0,
-      weeklyAllowance: 0,
-      purchases: [],
-      remainingWeeks: 0,
-      remainingAmount: 0,
-      termLength: 0,
-      weeklyHours: 0,
-      hourlyPay: 0,
-      recurringExpenses: [],
-      startDate: new Date()
-    }, action
-  ) {
+const initialState = {
+    savingsGoal: 0,
+    weeklyAllowance: 0,
+    purchases: [],
+    remainingWeeks: 0,
+    remainingAmount: 0,
+    termLength: 0,
+    weeklyHours: 0,
+    hourlyPay: 0,
+    recurringExpenses: [],
+    startDate: new Date()
+};
+
+function reducer(state = initialState, action) {
     switch (action.type) {
       case 'INITIAL_DATA':
         return {  

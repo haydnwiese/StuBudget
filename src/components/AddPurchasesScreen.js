@@ -14,6 +14,7 @@ import firebase from 'firebase';
 import Modal from 'react-native-modalbox';
 import { commonStyles, commonNavigationOptions } from '../styles/CommonStyles';
 import { Header, SubHeader, ActionButton, AmountInput } from '../components/CommonListItems';
+import { purchaseCategory } from '../constants'
 
 console.disableYellowBox = true;
 
@@ -29,7 +30,7 @@ export default class AddPurchasesScreen extends React.Component {
 
         this.state = {
             purchaseAmount: 0,
-            category: 'Food',
+            category: purchaseCategory.FOOD,
             description: null,
             date: new Date((date - (date % DAY_IN_MILLISECONDS)) - (20 * HOUR_IN_MILLISECONDS)),
             isOpen: false,
@@ -112,10 +113,11 @@ export default class AddPurchasesScreen extends React.Component {
                     selectedValue={this.state.category}
                     itemStyle={{ fontFamily: 'HelveticaNeue-Light', fontSize: 18, fontWeight: '300' }}
                     onValueChange={(value) => this.setState({ category: value })}>
-                    <Picker.Item label="Food" value="Food" />
-                    <Picker.Item label="Entertainment" value="Entertainment" />
-                    <Picker.Item label="Clothing" value="Clothing" />
-                    <Picker.Item label="Electronics" value="Electronics" />
+                    {
+                        Object.keys(purchaseCategory).map(key => (
+                            <Picker.Item label={purchaseCategory[key]} value={purchaseCategory[key]} />
+                        ))
+                    }
                 </Picker>
             </View>
         );
