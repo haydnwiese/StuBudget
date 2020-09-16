@@ -5,7 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "react-native start --reset-cache",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -22,7 +22,7 @@
     "react-native-pie-chart": "^1.0.13",
     "react-native-snap-carousel": "^3.7.5",
     "react-native-swipeout": "^2.3.6",
-    "react-native-vector-icons": "^6.6.0",
+    "react-native-vector-icons": "^6.7.0",
     "react-navigation": "^3.13.0",
     "react-navigation-redux-helpers": "^3.0.0",
     "react-redux": "^6.0.1",

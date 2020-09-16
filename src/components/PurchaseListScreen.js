@@ -69,11 +69,11 @@ export default class ViewPurchasesScreen extends React.Component {
         }   
     }
 
-    purchaseSelect = async(item) => {
+    purchaseSelect = (item) => {
         // TODO: Figure out haptic without using expo
         // Haptic.impact(Haptic.ImpactFeedbackStyle.Light);
 
-        await this.setState({
+        this.setState({
             isOpen: true,
             selectedPurchase: item,
         });

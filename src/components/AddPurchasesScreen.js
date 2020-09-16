@@ -39,7 +39,7 @@ export default class AddPurchasesScreen extends React.Component {
 
     static navigationOptions = commonNavigationOptions;
 
-    onSubmit = async () => {
+    onSubmit = () => {
         let currentDate = new Date();
         currentDate = currentDate.getTime();
         currentDate = (currentDate - (currentDate % DAY_IN_MILLISECONDS)) - (20 * HOUR_IN_MILLISECONDS);
@@ -50,7 +50,7 @@ export default class AddPurchasesScreen extends React.Component {
             let description = this.state.description;
             let purchaseDate = this.state.date.getTime();
 
-            await firebase.database().ref('all/purchases/').push({
+            firebase.database().ref('all/purchases/').push({
                 amount,
                 category,
                 description,

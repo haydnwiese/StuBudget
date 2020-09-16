@@ -1,16 +1,17 @@
+import React from 'react';
 import { 
     createStackNavigator, 
     createBottomTabNavigator, 
     createAppContainer 
 } from "react-navigation";
-import Ionicons from '../node_modules/react-native-vector-icons/Ionicons';
-import DetailsContainer from './containers/detailsContainer';
-import HomeContainer from './containers/homeContainer';
-import AddPurchasesScreen from './components/AddPurchasesScreen';
-import EditDetailsScreen from './components/EditDetailsScreen';
-import AddExpenseContainer from './containers/addExpenseContainer';
-import EditGoalContainer from './containers/editGoalContainer';
-import PurchaseListContainer from './containers/purchaseListContainer';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import DetailsContainer from '../containers/detailsContainer';
+import HomeContainer from '../containers/homeContainer';
+import AddPurchasesScreen from '../components/AddPurchasesScreen';
+import EditDetailsScreen from '../components/EditDetailsScreen';
+import AddExpenseContainer from '../containers/addExpenseContainer';
+import EditGoalContainer from '../containers/editGoalContainer';
+import PurchaseListContainer from '../containers/purchaseListContainer';
 
 const routes = {
     HOME: 'Home',
@@ -56,7 +57,7 @@ const HomeStack = createStackNavigator(
           let iconName;
           switch (routeName) {
             case routes.HOME:
-                iconName = 'ios-home';
+                iconName = 'home-outline';
                 break;
             case routes.DETAILS:
                 iconName = `ios-information-circle${focused ? '' : '-outline'}`;

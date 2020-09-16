@@ -44,8 +44,8 @@ export default class HomeScreen extends React.Component {
 
     static navigationOptions = commonNavigationOptions;
 
-    async componentWillMount() {
-        await this.getData();
+    componentWillMount() {
+        this.getData();
     }
 
     calculateDetails = () => {
@@ -164,8 +164,8 @@ export default class HomeScreen extends React.Component {
         })
     }
 
-    getData = async() => {
-        await firebase.database().ref('all/').on('value', async (snapshot) => {
+    getData = () => {
+        firebase.database().ref('all/').on('value', async (snapshot) => {
             let data = snapshot.val();
             let temp = [];
             let temp2 = [];
@@ -182,7 +182,7 @@ export default class HomeScreen extends React.Component {
             }
             data.recurringExpenses = temp2;
 
-            await this.props.dispatch({ 
+            this.props.dispatch({ 
                 type: 'INITIAL_DATA', 
                 payload: { 
                     savingsGoal: data.savingsGoal,
@@ -203,7 +203,7 @@ export default class HomeScreen extends React.Component {
     }
 
     deletePurchase = async(deleteKey) => {
-        await firebase.database().ref('all/purchases').on('child_added', function(data) {
+        firebase.database().ref('all/purchases').on('child_added', function(data) {
             if(data.val()==deleteKey){
                 bookings.child(data.key()).remove();
             }

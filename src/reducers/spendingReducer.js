@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = {
     savingsGoal: 0,
     weeklyAllowance: 0,
     purchases: [],

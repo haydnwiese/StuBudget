@@ -22,7 +22,7 @@ class AddExpenseScreen extends React.Component {
         },
     };
 
-    onSubmit = async() => {
+    onSubmit = () => {
         if (this.state.title && this.state.amount) {
             let key = this.props.recurringExpenses.length + 1;
             let title = this.state.title;
