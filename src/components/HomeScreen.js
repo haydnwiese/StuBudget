@@ -5,6 +5,7 @@ import PieChart from 'react-native-pie-chart';
 import Modal from 'react-native-modalbox';
 import firebase from 'firebase';
 import Carousel from 'react-native-snap-carousel';
+import { submitInitialData } from '../actions';
 
 import {Header, ActionButton, SubHeader} from '../components/CommonListItems';
 import { commonStyles, commonNavigationOptions } from '../styles/CommonStyles';
@@ -182,18 +183,15 @@ export default class HomeScreen extends React.Component {
             }
             data.recurringExpenses = temp2;
 
-            this.props.dispatch({ 
-                type: 'INITIAL_DATA', 
-                payload: { 
-                    savingsGoal: data.savingsGoal,
-                    purchases: data.purchases,
-                    termLength: data.termDetails.termLength,
-                    weeklyHours: data.termDetails.weeklyHours,
-                    hourlyPay: data.termDetails.hourlyPay,
-                    recurringExpenses: data.recurringExpenses,
-                    startDate: new Date(data.termDetails.startDate)
-                }
-            });
+            this.props.dispatch(submitInitialData({ 
+                savingsGoal: data.savingsGoal,
+                purchases: data.purchases,
+                termLength: data.termDetails.termLength,
+                weeklyHours: data.termDetails.weeklyHours,
+                hourlyPay: data.termDetails.hourlyPay,
+                recurringExpenses: data.recurringExpenses,
+                startDate: new Date(data.termDetails.startDate)
+            }));
 
             this.calculateDetails();
 

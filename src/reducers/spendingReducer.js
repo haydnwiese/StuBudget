@@ -1,3 +1,5 @@
+import { INITIAL_DATA, UPDATE_SPENDING } from '../constants/actionTypes';
+
 export const initialState = {
     savingsGoal: 0,
     weeklyAllowance: 0,
@@ -13,18 +15,19 @@ export const initialState = {
 
 function reducer(state = initialState, action) {
     switch (action.type) {
-      case 'INITIAL_DATA':
+      case INITIAL_DATA:
+        let { payload } = action;
         return {  
           ...state,
-          savingsGoal: action.payload.savingsGoal || 0,
-          purchases: action.payload.purchases,
-          termLength: action.payload.termLength,
-          weeklyHours: action.payload.weeklyHours,
-          hourlyPay: action.payload.hourlyPay,
-          recurringExpenses: action.payload.recurringExpenses || [],
-          startDate: action.payload.startDate,
+          savingsGoal: payload.savingsGoal || 0,
+          purchases: payload.purchases,
+          termLength: payload.termLength,
+          weeklyHours: payload.weeklyHours,
+          hourlyPay: payload.hourlyPay,
+          recurringExpenses: payload.recurringExpenses || [],
+          startDate: payload.startDate,
         };
-      case 'UPDATE_SPENDING':
+      case UPDATE_SPENDING:
         return {
           ...state,
           weeklyAllowance: action.payload.weeklyAllowance,
